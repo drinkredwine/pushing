@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="thunderpush.js"></script>
+The only thing you have to do now is to make a connection to your Thunderpush server in following way:
+
+</head>
+<body>
+try this shit
+<script type="text/javascript">
+    Thunder.connect("mastermind.exponea.com:8000", "868573DF7BF88", ["kanal1"], {log: true});
+    Thunder.listen(function(message) { alert(message);  });
+</script>
+
+
+</body>
+</html>

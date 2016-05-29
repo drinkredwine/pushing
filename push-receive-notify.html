@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="js/thunderpush.js"></script>
+    <script src="js/notify.js"></script>
+    <script src="js/notify-options.js"></script>
+
+
+</head>
+<body>
+<h2>Notification demo</h2>
+Connected to server and waiting for notifications.
+<p id="block">waiting</p>
+<script type="text/javascript">
+    Thunder.connect("mastermind.exponea.com:8000",
+            "868573DF7BF88",
+            ["channel"],
+            {log: true, user:"jozo.kovac3@gmail.com"}
+    );
+            last_message = null;
+            function onShowNotification () {
+                console.log('notification is shown!');
+            }
+
+            function onCloseNotification () {
+                console.log('notification is closed!');
+            }
+
+            function onClickNotification (message) {
+                window.open(last_message['link']);
+                console.log('notification was clicked!');
+            }
+
+            function onErrorNotification () {
+                console.error('Error showing notification. You may need to request permission.');
+                Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+            }
+
+            function onErrorNotification () {
+                console.error('Error showing notification. You may need to request permission.');
+            }
+
+            function onPermissionGranted () {
+                console.log('Permission has been granted by the user and message displayed');
+                if(last_message){
+                    doNotification(last_message);
+                }
+            }
+
+            function onPermissionDenied () {
+                console.warn('Permission has been denied by the user');
+            }
+
+            function doNotification (msg) {
+                var myNotification = new Notify(msg['title'], {
+                    body: msg['body'],
+                    tag: msg['title'],
+                    icon: msg['image'],
+                    notifyShow: onShowNotification,
+                    notifyClose: onCloseNotification,
+                    notifyClick: onClickNotification,
+                    notifyError: onErrorNotification,
+                    timeout: msg['timeout']
+                });
+
+                myNotification.show();
+            }
+
+    Thunder.listen(function(message) {
+            last_message = message;
+
+            if (!Notify.needsPermission) {
+                doNotification(message);
+            } else if (Notify.isSupported()) {
+                Notify.requestPermission(onPermissionGranted, onPermissionDenied);
+            }
+    });
+</script>
+    <div>
+    <button onclick="Notify.requestPermission(onPermissionGranted, onPermissionDenied);" name="grant">Allow notifications</button>
+    </div>
+
+    <div style="margin-top: 12px;">
+        <input type="checkbox" id="permission" disabled> </input><span id="permission_text">Push notifications disabled</span>
+        <script>
+            if (!Notify.needsPermission) {
+                document.getElementById("permission").checked = !Notify.needsPermission;
+                document.getElementById("permission_text").innerHTML = "Push notifications enabled";
+            }
+        </script>
+    </div>
+</body>
+</html>
