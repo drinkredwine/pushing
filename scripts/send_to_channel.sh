@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 CHANNEL="channel"
 SECRET="5176E439D4E13"

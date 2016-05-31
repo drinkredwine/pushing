@@ -29,7 +29,7 @@
 </p>
 
 <script type="text/javascript">
-    Thunder.connect("mastermind.exponea.com:8000", "868573DF7BF88", ["channel"], {log: true, user:"jozo.kovac3@gmail.com"});
+    Thunder.connect("mastermind.exponea.com:8000", "868573DF7BF88", ["channel", "chatroom"], {log: true, user:"jozo.kovac3@gmail.com"});
     Thunder.listen(function(message) {
             last_message = message;
             tryToShow(message);

@@ -16,3 +16,6 @@ URL="$HOST/api/1.0.0/$API_KEY/users/$USER/"
 echo $URL
 curl  -X POST -H "Content-Type: application/json" -H "X-Thunder-Secret-Key: $API_SECRET" $URL \
       -d "{\"title\": \"$TITLE\", \"tag\": \"$TAG\",  \"image\": \"$IMAGE\", \"body\": \"$BODY\", \"link\": \"$LINK\", \"timeout\": $TIMEOUT}"
+
+
+echo  "{\"title\": \"$TITLE\", \"tag\": \"$TAG\",  \"image\": \"$IMAGE\", \"body\": \"$BODY\", \"link\": \"$LINK\", \"timeout\": $TIMEOUT}"
